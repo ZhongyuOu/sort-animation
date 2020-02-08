@@ -40,20 +40,22 @@ class InsertionSort(Scene):
         # Insertion sort
         self.play(ApplyMethod(els[0].circle.set_color, BLUE_C))
         for i in range(1, len(arr)):
+            # Show current processing element
             selected_el = els[i]
             self.play(*move_el(selected_el, UP))
             j = i - 1
             while j >= 0 and els[j].val > selected_el.val:
-                els[j+1] = els[j]
+                els[j + 1] = els[j]
                 self.play(*move_el(els[j], RIGHT))
                 j -= 1
 
-            els[j+1] = selected_el
-            for _ in range(i-j-1):
-                self.play(*move_el(selected_el, LEFT))
-
+            # Move selected element to right position
+            els[j + 1] = selected_el
+            self.play(*move_el(selected_el, LEFT * (i - j - 1)))
             self.play(*move_el(selected_el, DOWN))
-            self.play(ApplyMethod(els[j+1].circle.set_color, BLUE_C))
+
+            # Mark (j+1)th element as finished
+            self.play(ApplyMethod(els[j + 1].circle.set_color, BLUE_C))
 
         # Finished!
         self.wait(3)
