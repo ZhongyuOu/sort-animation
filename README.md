@@ -16,4 +16,4 @@ Use manim to visualize some algorithm.
 
 
 ## Selection Sort
-![selection](https://raw.githubusercontent.com/ZhongyuOu/img_bed/master/2020/02/08_SelectionSort.gif)
+![selection](https://raw.githubusercontent.com/ZhongyuOu/img_bed/master/2020/02/08_SelectionSort_v2.gif)
