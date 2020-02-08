@@ -15,20 +15,6 @@ class Element:
         self.text.scale(SCALE)
 
 
-def swap_mobjects(x1: Mobject, x2: Mobject):
-    x1_copy, x2_copy = deepcopy(x1), deepcopy(x2)
-    x1_copy.move_to(x2.get_center())
-    x2_copy.move_to(x1.get_center())
-    return [CounterclockwiseTransform(x1, x1_copy), CounterclockwiseTransform(x2, x2_copy)]
-
-
-def swap_elements(e1: Element, e2: Element):
-    return [
-        *swap_mobjects(e1.text, e2.text),
-        *swap_mobjects(e1.circle, e2.circle),
-    ]
-
-
 def move_el(el, direction):
     """Move 1 unit to a specific direction.
     :param el: Element
@@ -65,13 +51,15 @@ class SelectionSort(Scene):
                     min_el = els[j]
                     min_idx = j
 
-            # If arr[i] is the min value, don't play animation
+            # If arr[i] is the min value, don't play any animation
             if i != min_idx:
+                dist = min_idx - i
                 self.play(*move_el(els[i], UP), *move_el(els[min_idx], DOWN))
-                self.play(*swap_elements(els[i], els[min_idx]))
-                self.play(*move_el(els[i], UP), *move_el(els[min_idx], DOWN))
+                self.play(*(move_el(els[i], RIGHT * dist)), *move_el(els[min_idx], LEFT * dist))
+                self.play(*move_el(els[i], DOWN), *move_el(els[min_idx], UP))
             els[i], els[min_idx] = els[min_idx], els[i]
 
             # Mark ith element as finished
             self.play(ApplyMethod(els[i].circle.set_color, BLUE_C))
+
         self.wait(3)
